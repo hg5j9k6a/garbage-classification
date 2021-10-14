@@ -9,7 +9,7 @@ from ur10e_forward import *
 from control_msgs.msg import FollowJointTrajectoryActionGoal
 from trajectory_msgs.msg import JointTrajectoryPoint
 from sensor_msgs.msg import JointState
-from ur_msgs.srv import ComputeKinematicPose,ComputeKinematicPoseResponse
+from robot_arm.srv import ComputeKinematicPose,ComputeKinematicPoseResponse
 from std_msgs.msg import Float32,Bool
 
 class ur10_pub():
