@@ -106,7 +106,7 @@ class ur10_pub():
         roll = msgs.angular.x
         pitch = msgs.angular.y
         yaw = msgs.angular.z
-        target = np.array([x,y,z,roll,pitch,yaw]])
+        target = np.array([x,y,z,roll,pitch,yaw])
         print(target)
         self.pub(target)
         
