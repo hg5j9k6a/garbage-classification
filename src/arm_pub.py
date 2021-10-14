@@ -9,6 +9,7 @@ from ur10e_forward import *
 from control_msgs.msg import FollowJointTrajectoryActionGoal
 from trajectory_msgs.msg import JointTrajectoryPoint
 from sensor_msgs.msg import JointState
+from geometry_msgs.msg import Twist
 from robot_arm.srv import ComputeKinematicPose,ComputeKinematicPoseResponse
 from std_msgs.msg import Float32,Bool
 
@@ -22,7 +23,7 @@ class ur10_pub():
         self.target_theta = None
         self.joint_sub = rospy.Subscriber('/joint_states',JointState,self._joint_cb)
         self.grip_joint_sub = rospy.Subscriber('//gripper_joint_states',JointState,self._grip_joint_cb)
-        self.move_arm_topice = rospy.Subscriber('/move_ik_arm',JointState,self._move_arm_cb)
+        self.move_arm_topice = rospy.Subscriber('/move_ik_arm',Twist,self._move_arm_cb)
         self.move_grip = rospy.Subscriber('/move_grip',Float32,self._move_grip_cb)
         while (self.current_joint is None) or (self.current_grip_joint is None):
             time.sleep(0.1)
@@ -99,9 +100,16 @@ class ur10_pub():
         self.current_grip_joint = np.array(msgs.position)
         
     def _move_arm_cb(self,msgs):
-        target = np.array(msgs.position)
+        x = -msgs.linear.x
+        y = msgs.linear.z
+        z = msgs.linear.y - 0.7
+        roll = msgs.angular.x
+        pitch = msgs.angular.y
+        yaw = msgs.angular.z
+        target = np.array([x,y,z,roll,pitch,yaw]])
         print(target)
         self.pub(target)
+        
     def _move_grip_cb(self,msgs):
         self.grip_pub(msgs.data )
         
