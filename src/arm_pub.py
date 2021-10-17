@@ -1,4 +1,5 @@
-#! /usr/bin/env python3
+#! /usr/bin/python3
+
 
 import rospy
 import time
@@ -57,7 +58,7 @@ class ur10_pub():
         
         self.move_done = rospy.Publisher('/move_done',Bool, queue_size=2 )
         time.sleep(1)
-        self.pub(np.array([-0.2,-0.2,0.58,0,0,-1.57]))
+        self.pub(np.array([-0.2,0.5,0.5,0,0,-1.57]))
         
             
     def pub(self, target_pos): # target_pos = [x,y,z,roll,pitch,yaw] units in m and radians. pitch should be 0, or it wont find the answer by some unknow reason.

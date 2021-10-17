@@ -114,10 +114,10 @@ def IK(current_theta,target_pos, ACCEPTANCE = 0.0005):
         #####################################
         if new_theta[2] > math.pi:
             new_theta[2] = math.pi
-        if new_theta[4] > 3*math.pi/2:
-            new_theta[4] = 3*math.pi/2
-        if new_theta[4] < - 1*math.pi/2 :
-            new_theta[4] = - 1*math.pi/2 
+        if new_theta[4] > 6*math.pi/2:
+            new_theta[4] = 6*math.pi/2
+        if new_theta[4] < - 3*math.pi/2 :
+            new_theta[4] = - 3*math.pi/2 
             
         d_err = target_pos - fwd_kinematics( new_theta ) # d_err is error from [x,y,z,roll,pitch,yaw]
         
@@ -158,8 +158,19 @@ def analytical(target):
     theta[0] = math.atan2(-(y+0.4),-x)
     # if theta[0] < 0:
     #     theta[0] = theta[0] + 2 * math.pi
-    theta[1] = -(math.atan2(z,math.sqrt(np.square(x)+np.square(y)))) - math.acos( (np.square(0.63)+ np.square(x)+np.square(y)+np.square(z) - np.square(0.58))/ (2*0.63*math.sqrt(np.square(x)+np.square(y)+np.square(z))) )
-    theta[2] = math.pi - math.acos( (np.square(0.63) + np.square(0.58) - (np.square(x)+np.square(y)+np.square(z)) ) / (2*0.63*0.58)  ) 
+
+    angle_1 = (np.square(0.63)+ np.square(x)+np.square(y)+np.square(z) - np.square(0.58))/ (2*0.63*math.sqrt(np.square(x)+np.square(y)+np.square(z)))
+    if angle_1 >= 1:
+        angle_1 = 1
+    if angle_1 <= -1:
+        angle_1 = -1 
+    theta[1] = -(math.atan2(z,math.sqrt(np.square(x)+np.square(y)))) - math.acos( angle_1 )
+    angle_2 = (np.square(0.63) + np.square(0.58) - (np.square(x)+np.square(y)+np.square(z)) ) / (2*0.63*0.58)
+    if angle_2 >= 1:
+        angle_2 = 1
+    if angle_2 <= -1:
+        angle_2 = -1 
+    theta[2] = math.pi - math.acos( angle_2 ) 
     theta[3] = -(theta[1] + theta[2]) -roll/2 #-math.pi/2
     theta[4] = -yaw + theta[0] -roll/2
     theta[5] = -pitch 
