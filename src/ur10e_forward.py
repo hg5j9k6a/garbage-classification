@@ -137,9 +137,9 @@ def IK(current_theta,target_pos, ACCEPTANCE = 0.0005):
         
         count = count + 1
         if np.linalg.norm(d_err) < ACCEPTANCE:
-            if new_theta[2] < -math.pi:
-                print("IK Fail!")
-                return current_theta
+            # if new_theta[2] < -math.pi:
+            #     print("IK Fail!")
+            #     return current_theta
             print("IK Move!")
             # print(new_theta)
             
@@ -148,7 +148,8 @@ def IK(current_theta,target_pos, ACCEPTANCE = 0.0005):
             # print("d_err",np.linalg.norm(d_err))
             # print("theta:",new_theta)
             # print("pos:",fwd_kinematics(new_theta))
-            return current_theta
+            # return current_theta
+            return new_theta
     return new_theta #, count , np.linalg.norm(d_err)
 
 
