@@ -93,7 +93,7 @@ def do_things(target_pos,target_dic,box_dic,tissue = False):
     for i in range(3):
         gripper_pub.publish(Float32(0.0))
         time.sleep(0.01)
-        
+    time.sleep(1)
     if tissue:
         msg.angular.x = target_dic["roll"]
         pub.publish(msg)
@@ -110,9 +110,18 @@ def do_things(target_pos,target_dic,box_dic,tissue = False):
         msg.linear.y = 1.1
         pub.publish(msg)
         time.sleep(0.25)
+    else:
+        msg.linear.x = 0.2
+        msg.linear.y = 1.2
+        msg.linear.z = 0.5
+        msg.angular.x = 0.0
+        msg.angular.y = 0.0
+        msg.angular.z = -1.57
+        pub.publish(msg)
+        time.sleep(0.5)
         
 if __name__ == '__main__':
     op = object_pos()
-    x ,z = (0.614982001814, 0.2129943)
+    x ,z = (0.7885217083801764, 0.12446616459097752)
     
-    do_things((x,z),op.chip_bag,op.palstic_bag_box,True)
+    do_things((x,z),op.milk_250ml,op.paper_box,False)

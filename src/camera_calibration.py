@@ -131,7 +131,7 @@ if __name__ == '__main__':
     # boundering= np.array([[61,211],[150,259]]) 
     # boundering= np.array([[230,135],[280,172]]) 
     # boundering= np.array([[148,189],[180,210]]) 
-    boundering= np.array([[190,260],[240,290]])  # [img[y,x] -> img[y',x']]
+    boundering= np.array([[240,250],[280,285]])  # [img[y,x] -> img[y',x']]
     
     print(cam.object_pos(boundering))
     
