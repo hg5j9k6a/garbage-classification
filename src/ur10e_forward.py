@@ -114,10 +114,10 @@ def IK(current_theta,target_pos, ACCEPTANCE = 0.0005):
         #####################################
         if new_theta[2] > math.pi:
             new_theta[2] = math.pi
-        if new_theta[4] > 6*math.pi/2:
-            new_theta[4] = 6*math.pi/2
-        if new_theta[4] < - 3*math.pi/2 :
-            new_theta[4] = - 3*math.pi/2 
+        if new_theta[4] > 2*math.pi/2:
+            new_theta[4] = new_theta[4] - 4*math.pi/2
+        if new_theta[4] < - 2*math.pi/2 :
+            new_theta[4] = new_theta[4] + 4*math.pi/2 
             
         d_err = target_pos - fwd_kinematics( new_theta ) # d_err is error from [x,y,z,roll,pitch,yaw]
         
@@ -140,16 +140,17 @@ def IK(current_theta,target_pos, ACCEPTANCE = 0.0005):
             # if new_theta[2] < -math.pi:
             #     print("IK Fail!")
             #     return current_theta
-            print("IK Move!")
-            # print(new_theta)
+            print("IK Move! : ", count)
+            print(new_theta)
             
-        if (count > 3000 ):
+        if (count > 800 ):
             print("Fail to find the joint value !")
             # print("d_err",np.linalg.norm(d_err))
             # print("theta:",new_theta)
             # print("pos:",fwd_kinematics(new_theta))
             # return current_theta
             return new_theta
+            
     return new_theta #, count , np.linalg.norm(d_err)
 
 
@@ -173,7 +174,7 @@ def analytical(target):
         angle_2 = -1 
     theta[2] = math.pi - math.acos( angle_2 ) 
     theta[3] = -(theta[1] + theta[2]) -roll/2 #-math.pi/2
-    theta[4] = -yaw + theta[0] -roll/2
+    theta[4] = 0#-yaw + theta[0] -roll/2
     theta[5] = -pitch 
     # print("Anal theta:",theta)
     return theta

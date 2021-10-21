@@ -19,7 +19,7 @@ import matplotlib.image as img
 import time
 import numpy as np
 import math
-import copy
+from copy import deepcopy
 np.set_printoptions(threshold=np.inf)
 
 
@@ -62,6 +62,11 @@ class Camera():
         # cv2.waitKey(1)	
 
     def object_pos(self,boundering): # boundering = [[a,b],[a',b']]
+        a = int(boundering[0,0])
+        b = int(boundering[0,1])
+        _a = int(boundering[1,0])
+        _b = int(boundering[1,1])
+        
         # width_wide_pixel = np.radians(32)/320
         # use deep learn algorithm to predict object bounding box value ((a,b),(a',b')) from pic
         # find object depth by using mean value, then get x value from world coordination
@@ -71,8 +76,21 @@ class Camera():
         black_img = np.zeros((height,width))
         delta_img = np.abs(cal_img - self.clean_table_img)
         black_img[np.where(delta_img > 0.01)] = cal_img[np.where(delta_img > 0.01)]
-        x = 1.35272 - np.mean(cal_img [ np.where( delta_img[boundering[0,0]:boundering[1,0,boundering[0,1]:,boundering[1,1]]] > 0.01 ) ])
+        # print(boundering[0,0],boundering[1,0])
+        # x_img = cal_img [ np.where( delta_img[a:_a,b:_b] > 0.02 ) ]
         
+        point_depth = []
+        for i in np.arange(a,_a+1):
+            for j in np.arange(b,_b+1):
+                if black_img[i,j] > 0.01:
+                    point_depth.append(black_img[i,j])
+        ## filter
+        point_depth = np.sort(point_depth)
+        mean_depth = np.mean(point_depth[int(len(point_depth) * 0.4):int(len(point_depth) * 0.75)])
+        plt.title("x_img")
+        plt.imshow(black_img[a:_a,b:_b],cmap='gray')
+        plt.show()
+        x = (1.35272 - mean_depth)
         # find object pos by using predict center value (mean(a),mean(b)) -> (ma,mb)
         # and mean value of depth (x) , then get z value from world coordination
         m = abs(x - 0.22)
@@ -104,10 +122,18 @@ if __name__ == '__main__':
     cam = Camera()
         
     img = cam.depth_calibration()
-    # clean_table_img = copy.deepcopy(cam.clean_table_img)
+    # clean_table_img = deepcopy(cam.clean_table_img)
+
     plt.title("cal_img")
     plt.imshow(img,cmap='gray')
     plt.show()
+
+    # boundering= np.array([[61,211],[150,259]]) 
+    # boundering= np.array([[230,135],[280,172]]) 
+    # boundering= np.array([[148,189],[180,210]]) 
+    boundering= np.array([[190,260],[240,290]])  # [img[y,x] -> img[y',x']]
+    
+    print(cam.object_pos(boundering))
     
     # print(np.shape(img))
     # cv2.namedWindow("image")
@@ -119,10 +145,10 @@ if __name__ == '__main__':
     # np.save(os.path.join(PATH, 'clean_table'), np.array(img))
 
     
-    try:
-        rospy.spin()
+    # try:
+    #     rospy.spin()
 
-    except KeyboardInterrupt:
-        print("Shutting down...")
+    # except KeyboardInterrupt:
+    #     print("Shutting down...")
         
     # cv2.destroyAllWindows()
