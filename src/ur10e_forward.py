@@ -140,9 +140,9 @@ def IK(current_theta,target_pos, ACCEPTANCE = 0.0005):
             # if new_theta[2] < -math.pi:
             #     print("IK Fail!")
             #     return current_theta
-            print("IK Move! : ", count)
-            print(new_theta)
-            
+            # print("IK Move! : ", count)
+            # print(new_theta)
+            pass
         if (count > 800 ):
             print("Fail to find the joint value !")
             # print("d_err",np.linalg.norm(d_err))

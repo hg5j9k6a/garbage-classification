@@ -6,7 +6,6 @@ from std_msgs.msg import Float32
 from copy import deepcopy
 from object_pos import object_pos
 
-rospy.init_node("node_that_moves_arm_quickly")
 pub = rospy.Publisher("/move_ik_arm", Twist, queue_size=2)
 gripper_pub = rospy.Publisher("/move_grip", Float32, queue_size=2)
 
@@ -58,8 +57,8 @@ def do_things(target_pos,target_dic,box_dic,tissue = False):
     # Go to target
     for m in targets:
         pub.publish(m)
-        time.sleep(0.8)
-        rospy.loginfo("Message published!")
+        time.sleep(1)
+        # rospy.loginfo("Message published!")
 
     # Grab the target.
     time.sleep(0.5)
@@ -89,7 +88,7 @@ def do_things(target_pos,target_dic,box_dic,tissue = False):
     for m in targets:
         pub.publish(m)
         time.sleep(0.8)
-        rospy.loginfo("Message published!")
+        # rospy.loginfo("Message published!")
     for i in range(3):
         gripper_pub.publish(Float32(0.0))
         time.sleep(0.01)
@@ -121,6 +120,8 @@ def do_things(target_pos,target_dic,box_dic,tissue = False):
         time.sleep(0.5)
         
 if __name__ == '__main__':
+    rospy.init_node("node_that_moves_arm_quickly")
+    
     op = object_pos()
     x ,z = (0.7885217083801764, 0.12446616459097752)
     

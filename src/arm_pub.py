@@ -107,7 +107,7 @@ class ur10_pub():
         pitch = msgs.angular.y
         yaw = msgs.angular.z
         target = np.array([x,y,z,roll,pitch,yaw])
-        print(target)
+        # print(target)
         self.pub(target)
         
     def _move_grip_cb(self,msgs):

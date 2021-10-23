@@ -19,7 +19,7 @@ class object_pos():
         self.water_bottle   =   {"x":0.0,"y":0.88,"z":0.0,"roll":0.0,"pitch":0.0,"yaw":-0.8,"grip":65.0}
         self.tissue         =   {"x":0.0,"y":0.78,"z":0.0,"roll":0.0,"pitch":0.0,"yaw":-0.8,"grip":40.0}
         self.pain_killer    =   {"x":0.0,"y":0.75,"z":0.0,"roll":0.0,"pitch":0.0,"yaw":-0.8,"grip":90.0}
-        self.chip_bag       =   {"x":0.0,"y":0.70,"z":0.0,"roll":1.57,"pitch":0.0,"yaw":0.0,"grip":70.0}
-        self.wine_bottle    =   {"x":0.0,"y":0.85,"z":0.0,"roll":0.0,"pitch":0.0,"yaw":-0.8,"grip":75.0}
+        self.chip_bag       =   {"x":0.0,"y":0.70,"z":0.0,"roll":1.57,"pitch":0.0,"yaw":0.0,"grip":80.0}
+        self.wine_bottle    =   {"x":0.0,"y":0.88,"z":0.0,"roll":0.0,"pitch":0.0,"yaw":-0.8,"grip":75.0}
         self.coffee_can     =   {"x":0.0,"y":0.78,"z":0.0,"roll":0.0,"pitch":0.0,"yaw":-0.8,"grip":50.0}
         
